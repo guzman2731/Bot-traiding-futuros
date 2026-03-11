@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>USDT AI Trade</title>
+    <title>Trading Bot</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore-compat.js"></script>
@@ -16,13 +16,11 @@
         .usdt-logo { width: 32px; height: 32px; background: #26a17b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; }
         
         .payment-section { padding: 0 15px; margin-bottom: 80px; }
-        .payment-title { font-size: 14px; color: var(--accent); font-weight: bold; margin-bottom: 15px; text-align: left; }
-        .btn-pay { background: var(--card-bg); color: white; padding: 15px; border-radius: 12px; border: 1px solid var(--accent); font-weight: bold; width: 100%; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; font-size: 15px; box-sizing: border-box; }
-        .btn-pay span { background: var(--accent); color: #0b1616; padding: 2px 8px; border-radius: 5px; font-size: 12px; }
-        .btn-card { border-color: #ff9900; } /* Color diferente para destacar tarjeta */
-        .btn-card span { background: #ff9900; }
-
-        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #0b1616; display: grid; grid-template-columns: repeat(4, 1fr); padding: 15px 0; border-top: 1px solid #1f3d3d; text-align: center; font-size: 11px; }
+        .payment-title { font-size: 13px; color: var(--accent); font-weight: bold; margin-bottom: 12px; text-align: left; text-transform: uppercase; }
+        .btn-pay { background: var(--card-bg); color: white; padding: 16px; border-radius: 12px; border: 1px solid var(--accent); font-weight: bold; width: 100%; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; font-size: 14px; box-sizing: border-box; }
+        .btn-pay span { background: var(--accent); color: #0b1616; padding: 2px 8px; border-radius: 5px; font-size: 11px; }
+        .btn-card { border-color: #f3ba2f; } 
+        .btn-card span { background: #f3ba2f; }
     </style>
 </head>
 <body>
@@ -35,25 +33,20 @@
     </div>
 
     <div class="payment-section">
-        <div class="payment-title">MÉTODO: TARJETA DE CRÉDITO / DÉBITO</div>
-        <a href="https://www.moonpay.com/buy/usdt?walletAddress=TCGdY65GzeiNZgfDsanZ2SFT8tbTzeVJCr&currencyCode=usdt_trc20" target="_blank" class="btn-pay btn-card">
-            Comprar con Tarjeta 💳 <span>VISA/MC</span>
+        <div class="payment-title">Pagar con Tarjeta (Zinli, Wally, USD)</div>
+        <a href="https://www.binance.com/es/crypto/buy/USD/USDT" target="_blank" class="btn-pay btn-card">
+            Comprar USDT con Tarjeta 💳 <span>VISA/MC</span>
         </a>
 
-        <div class="payment-title" style="margin-top:20px;">MÉTODO: CRIPTO DIRECTO (OXAPAY)</div>
+        <div class="payment-title" style="margin-top:20px;">Pagar con Cripto Directo</div>
         <a href="https://pay.oxapay.com/18805505" target="_blank" class="btn-pay">
             Recargar 10 USDT <span>₮</span>
         </a>
-        <a href="https://pay.oxapay.com/15633493" target="_blank" class="btn-pay">
-            Recargar 50 USDT <span>₮</span>
-        </a>
-    </div>
 
-    <div class="nav-bar">
-        <div style="color:var(--accent)">🏠<br>Hogar</div>
-        <div>👥<br>Amigos</div>
-        <div>📄<br>Info</div>
-        <div>⚙️<br>Tarea</div>
+        <div class="payment-title" style="margin-top:20px;">¿Necesitas ayuda?</div>
+        <a href="https://t.me/TuUsuarioDeTelegram" target="_blank" class="btn-pay" style="border-color: #24A1DE;">
+            Contactar a Soporte 📩 <span>CHAT</span>
+        </a>
     </div>
 
     <script>
@@ -69,8 +62,10 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
+        // Escuchar saldo real: Busca en la colección 'usuarios' el documento 'Ran2731'
         db.collection("usuarios").doc("Ran2731").onSnapshot((doc) => {
             if (doc.exists) {
+                // Importante: El campo en Firebase debe llamarse 'saldo'
                 document.getElementById("saldo-pantalla").innerText = parseFloat(doc.data().saldo).toFixed(2);
             }
         });
