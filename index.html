@@ -1,15 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
-<head> <!DOCTYPE html>
-<html lang="en">
-<head> <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="cryptomus" content="4ccd6891">
-    <meta charset="UTF-8">
-    <meta charset="UTF-8">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Trading Bot</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
@@ -17,63 +11,19 @@
     <style>
         :root { --bg-color: #0b1616; --card-bg: #142626; --accent: #26e0b8; --text-gray: #8ba3a3; }
         body { background-color: var(--bg-color); color: white; font-family: sans-serif; margin: 0; padding: 0; }
-        .main-card { margin: 15px; padding: 25px; background: var(--card-bg); border-radius: 20px; text-align: center; border: 1px solid #1f3d3d; }
+        .main-card { margin: 15px; padding: 25px; background: var(--card-bg); border-radius: 12px; text-align: center; }
         .balance-val { font-size: 42px; font-weight: bold; margin: 10px 0; color: white; }
-        .btn-pay { background: var(--card-bg); color: white; padding: 16px; border-radius: 12px; border: 1px solid var(--accent); font-weight: bold; width: 100%; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; font-size: 14px; box-sizing: border-box; }
-        .btn-pay span { background: var(--accent); color: #0b1616; padding: 2px 8px; border-radius: 5px; font-size: 11px; }
+        .btn-pay { background: var(--card-bg); color: white; padding: 16px; border: 1px solid var(--accent); border-radius: 12px; width: 100%; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .btn-pay span { background: var(--accent); color: #0b1616; padding: 2px 8px; border-radius: 4px; font-weight: bold; margin-left: 10px; }
     </style>
 </head>
 <body>
-    <div style="padding: 15px;">👤 <b>Ran2731</b></div>
-    
     <div class="main-card">
-        <div style="color:var(--accent); font-size:13px; font-weight:bold;">🔥 BALANCE DISPONIBLE</div>
-        <div class="balance-val">₮ <span id="saldo-pantalla">0.00</span></div>
-        <div style="color: var(--text-gray); font-size: 14px;">Ganancia: <span style="color:var(--accent)">+5.50%</span></div>
+        <p style="color: var(--text-gray);">Balance Total</p>
+        <div class="balance-val">$0.00</div>
+        <button class="btn-pay" onclick="window.location.href='AQUÍ_PONDREMOS_EL_LINK_LUEGO'">
+            Pagar Suscripción <span>10 USDT</span>
+        </button>
     </div>
-
-    <div style="padding: 0 15px;">
-        <p style="color:var(--accent); font-size:12px;">MÉTODO: TARJETAS VIRTUALES / USD</p>
-        <a href="https://t.me/Ran2731" target="_blank" class="btn-pay" style="border-color:#5d5fef">
-            Pagar con Tarjeta (Zinli/Wally) 💳 <span style="background:#5d5fef; color:white;">SOLICITAR</span>
-        </a>
-
-        <p style="color:var(--accent); font-size:12px; margin-top:20px;">MÉTODO: CRIPTO (OXAPAY)</p>
-        <a href="https://pay.oxapay.com/18805505" target="_blank" class="btn-pay">
-            Recargar 10 USDT <span>₮</span>
-        </a>
-    </div>
-
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCA1EZJ87ev6Tj8XnIpPEvDUTZjp2j_H9Y",
-            authDomain: "bottraiding2731.firebaseapp.com",
-            projectId: "bottraiding2731",
-            storageBucket: "bottraiding2731.firebasestorage.app",
-            messagingSenderId: "471008578191",
-            appId: "1:471008578191:web:fa537d38aac3b1647d3efa"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // Esta función lee el saldo de CUALQUIER forma que lo tengas en Firebase
-        function cargarDatos() {
-            // Busca el documento Ran2731 y extrae el campo saldo
-            db.doc("Ran2731").onSnapshot((doc) => {
-                if (doc.exists && doc.data().saldo) {
-                    document.getElementById("saldo-pantalla").innerText = parseFloat(doc.data().saldo).toFixed(2);
-                }
-            });
-            // También busca por si acaso está en la carpeta 'usuarios'
-            db.collection("usuarios").doc("Ran2731").onSnapshot((doc) => {
-                if (doc.exists && doc.data().saldo) {
-                    document.getElementById("saldo-pantalla").innerText = parseFloat(doc.data().saldo).toFixed(2);
-                }
-            });
-        }
-        cargarDatos();
-        Telegram.WebApp.ready();
-        Telegram.WebApp.expand();
-    </script>
 </body>
 </html>
