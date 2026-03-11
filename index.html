@@ -2,67 +2,80 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CriptoBot Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI Trade Robot</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        body { background-color: #0b0e11; color: white; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
-        .card { background: #1e2329; border: 1px solid #02c076; padding: 20px; border-radius: 15px; margin-top: 20px; }
-        .price { font-size: 32px; color: #02c076; font-weight: bold; margin: 10px 0; }
-        .btn-deposit { background: #02c076; color: black; border: none; padding: 15px; border-radius: 10px; font-weight: bold; margin-top: 20px; width: 100%; cursor: pointer; }
-        #deposit-section { display: none; background: white; color: black; margin-top: 20px; padding: 20px; border-radius: 15px; }
-        #qrcode { display: flex; justify-content: center; margin: 15px 0; }
-        .wallet-addr { word-break: break-all; font-size: 12px; font-weight: bold; background: #eee; padding: 10px; border-radius: 5px; }
+        :root { --bg-color: #0b1616; --card-bg: #142626; --accent: #26e0b8; --text-gray: #8ba3a3; }
+        body { background-color: var(--bg-color); color: white; font-family: sans-serif; margin: 0; padding: 0; }
+        .header { padding: 15px; display: flex; align-items: center; gap: 10px; font-size: 14px; border-bottom: 1px solid #1f3d3d; }
+        .main-card { margin: 15px; padding: 25px; background: var(--card-bg); border-radius: 20px; text-align: center; border: 1px solid #1f3d3d; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .balance-val { font-size: 42px; font-weight: bold; margin: 10px 0; color: white; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .usdt-logo { width: 32px; height: 32px; background: #26a17b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+        .btn-buy { background: var(--accent); color: #0b1616; padding: 18px; border-radius: 15px; border: none; font-weight: bold; width: 92%; margin: 10px auto; display: block; font-size: 16px; box-shadow: 0 0 15px rgba(38, 224, 184, 0.3); }
+        .data-table { margin: 20px 15px; background: var(--card-bg); border-radius: 20px; padding: 20px; margin-bottom: 100px; }
+        .table-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #1f3d3d; font-size: 14px; }
+        #deposit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; padding: 20px; box-sizing: border-box; }
+        .modal-content { background: white; color: black; padding: 25px; border-radius: 25px; text-align: center; margin-top: 40px; }
+        #qrcode { display: flex; justify-content: center; margin: 20px 0; }
+        .wallet-addr { word-break: break-all; font-size: 12px; background: #f0f0f0; padding: 12px; border-radius: 12px; font-weight: bold; border: 1px dashed #ccc; }
+        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #0b1616; display: grid; grid-template-columns: repeat(4, 1fr); padding: 15px 0; border-top: 1px solid #1f3d3d; text-align: center; font-size: 11px; z-index: 99; }
+        .nav-item { color: var(--text-gray); }
+        .active { color: var(--accent); }
     </style>
 </head>
 <body>
-    <h3>PANEL DE TRADING</h3>
-    <div class="card">
-        <p style="color: #848e9c;">Bitcoin / USDT</p>
-        <div class="price" id="btc-price">Cargando...</div>
+
+    <div class="header">👤 <b>Ran2731</b> <span style="margin-left: auto;">🔔 🌐</span></div>
+
+    <div class="main-card">
+        <div style="color:var(--accent); font-size:13px; font-weight:bold;">🔥 (USDT Trade Rights)</div>
+        <div class="balance-val"><div class="usdt-logo">₮</div> 10.00</div>
+        <div style="color: var(--text-gray); font-size: 14px;">Ganancia diaria: <span style="color:var(--accent)">$0.550 (+5.50%)</span></div>
     </div>
 
-    <button class="btn-deposit" onclick="showDeposit()">📥 DEPOSITAR USDT</button>
+    <button class="btn-buy" onclick="openDeposit()">₮ Comprar USDT 🔥</button>
 
-    <div id="deposit-section">
-        <h4>Depositar USDT (TRC20)</h4>
-        <div id="qrcode"></div>
-        <p class="wallet-addr" id="wallet">TU_DIRECCION_AQUI</p>
-        <p style="font-size: 10px;">Solo envía USDT por la red TRC20</p>
-        <button onclick="hideDeposit()" style="margin-top:10px; border:none; background:none; color:red; font-weight:bold;">VOLVER</button>
+    <div class="data-table">
+        <h4 style="margin:0 0 15px 0; color:var(--accent); text-align:center;">Retorno de Inversión (ROI)</h4>
+        <div class="table-row"><span>Inversión > $1.00</span> <span style="color:var(--accent)">1.00%</span></div>
+        <div class="table-row"><span>Inversión > $5.00</span> <span style="color:var(--accent)">5.50%</span></div>
+        <div class="table-row"><span>Inversión > $20.00</span> <span style="color:var(--accent)">8.50%</span></div>
+        <div class="table-row"><span>Inversión > $300.00</span> <span style="color:var(--accent)">10.50%</span></div>
+    </div>
+
+    <div id="deposit-modal">
+        <div class="modal-content">
+            <h3 style="margin-top:0">Depositar USDT</h3>
+            <p style="font-size:12px; color:#666">Red: <b>TRC20 (Tron)</b></p>
+            <div id="qrcode"></div>
+            <p class="wallet-addr" id="walletText">TU_BILLETERA_AQUI</p>
+            <button onclick="closeDeposit()" style="margin-top:20px; padding:15px; border:none; background:#0b1616; color:white; border-radius:15px; width:100%; font-weight:bold;">CERRAR VENTANA</button>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <div class="nav-item active">🏠<br>Hogar</div>
+        <div class="nav-item">👥<br>Amigos</div>
+        <div class="nav-item">📄<br>Info</div>
+        <div class="nav-item">⚙️<br>Tarea</div>
     </div>
 
     <script>
-        // PEGA TU DIRECCIÓN AQUÍ
-        const miBilletera TGGCpwgxRA2J66Sm29XAbU8TC3TDYzoWH9
+        // --- CAMBIA ESTO POR TU DIRECCIÓN ---
+        const miBilletera = TCGdY65GzeiNZgfDsanZ2SFT8tbTzeVJCr
 
-        function showDeposit() {
-            document.getElementById('deposit-section').style.display = 'block';
-            document.getElementById('wallet').innerText = miBilletera;
-            // Generar QR
+        function openDeposit() {
+            document.getElementById('deposit-modal').style.display = 'block';
+            document.getElementById('walletText').innerText = miBilletera;
             document.getElementById('qrcode').innerHTML = "";
-            new QRCode(document.getElementById("qrcode"), {
-                text: miBilletera,
-                width: 150,
-                height: 150
-            });
+            new QRCode(document.getElementById("qrcode"), { text: miBilletera, width: 180, height: 180 });
         }
-
-        function hideDeposit() {
-            document.getElementById('deposit-section').style.display = 'none';
-        }
-
-        async function fetchPrice() {
-            try {
-                const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
-                const data = await response.json();
-                document.getElementById('btc-price').innerText = `$${parseFloat(data.price).toLocaleString()}`;
-            } catch (e) { document.getElementById('btc-price').innerText = "API Error"; }
-        }
-        setInterval(fetchPrice, 3000);
-        fetchPrice();
+        function closeDeposit() { document.getElementById('deposit-modal').style.display = 'none'; }
+        
         Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
     </script>
 </body>
 </html>
