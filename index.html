@@ -3,26 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Trading Bot</title>
+    <title>USDT AI Trade</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore-compat.js"></script>
     <style>
-        :root { --bg-color: #0b1616; --card-bg: #142626; --accent: #26e0b8; }
-        body { background-color: var(--bg-color); color: white; font-family: sans-serif; margin: 0; padding: 20px; text-align: center; }
-        .card { background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid #1f3d3d; margin-top: 20px; }
-        .balance { font-size: 48px; font-weight: bold; color: white; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn { background: var(--accent); color: #0b1616; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; font-size: 16px; margin-top: 20px; }
+        :root { --bg-color: #0b1616; --card-bg: #142626; --accent: #26e0b8; --text-gray: #8ba3a3; }
+        body { background-color: var(--bg-color); color: white; font-family: sans-serif; margin: 0; padding: 0; }
+        .header { padding: 15px; display: flex; align-items: center; gap: 10px; font-size: 14px; }
+        .main-card { margin: 15px; padding: 25px; background: var(--card-bg); border-radius: 20px; text-align: center; border: 1px solid #1f3d3d; }
+        .balance-val { font-size: 42px; font-weight: bold; margin: 10px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .usdt-logo { width: 32px; height: 32px; background: #26a17b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+        
+        .payment-section { padding: 0 15px; margin-bottom: 80px; }
+        .payment-title { font-size: 14px; color: var(--accent); font-weight: bold; margin-bottom: 15px; text-align: left; }
+        .btn-pay { background: var(--card-bg); color: white; padding: 15px; border-radius: 12px; border: 1px solid var(--accent); font-weight: bold; width: 100%; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; font-size: 15px; }
+        .btn-pay span { background: var(--accent); color: #0b1616; padding: 2px 8px; border-radius: 5px; font-size: 12px; }
+
+        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #0b1616; display: grid; grid-template-columns: repeat(4, 1fr); padding: 15px 0; border-top: 1px solid #1f3d3d; text-align: center; font-size: 11px; }
     </style>
 </head>
 <body>
-    <div style="text-align: left;">👤 <b>Ran2731</b></div>
-    <div class="card">
-        <div style="color:var(--accent); font-weight:bold; font-size: 12px;">🔥 (USDT Trade Rights)</div>
-        <div class="balance">₮ <span id="saldo-pantalla">...</span></div>
-        <div style="color: #8ba3a3; font-size: 14px;">Ganancia diaria: <span style="color:var(--accent)">+5.50%</span></div>
+    <div class="header">👤 <b>Ran2731</b> <span style="margin-left: auto;">🔔 🌐</span></div>
+    
+    <div class="main-card">
+        <div style="color:var(--accent); font-size:13px; font-weight:bold;">🔥 (USDT Trade Rights)</div>
+        <div class="balance-val"><div class="usdt-logo">₮</div> <span id="saldo-pantalla">0.00</span></div>
+        <div style="color: var(--text-gray); font-size: 14px;">Ganancia diaria: <span style="color:var(--accent)">+5.50%</span></div>
     </div>
-    <button class="btn" onclick="pagar()">₮ Comprar USDT 🔥</button>
+
+    <div class="payment-section">
+        <div class="payment-title">MÉTODOS DE RECARGA (TARJETA / CRIPTO)</div>
+        
+        <a href="https://pay.oxapay.com/18805505" target="_blank" class="btn-pay">
+            Recargar 10 USDT <span>PAGAR</span>
+        </a>
+        
+        <a href="https://pay.oxapay.com/15633493" target="_blank" class="btn-pay">
+            Recargar 50 USDT <span>PAGAR</span>
+        </a>
+        
+        <a href="https://pay.oxapay.com/13074268" target="_blank" class="btn-pay">
+            Recargar 100 USDT <span>PAGAR</span>
+        </a>
+    </div>
+
+    <div class="nav-bar">
+        <div style="color:var(--accent)">🏠<br>Hogar</div>
+        <div>👥<br>Amigos</div>
+        <div>📄<br>Info</div>
+        <div>⚙️<br>Tarea</div>
+    </div>
 
     <script>
         const firebaseConfig = {
@@ -37,18 +68,12 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Escucha el saldo en tiempo real
+        // Escuchar saldo en tiempo real desde Firebase
         db.collection("usuarios").doc("Ran2731").onSnapshot((doc) => {
             if (doc.exists) {
                 document.getElementById("saldo-pantalla").innerText = parseFloat(doc.data().saldo).toFixed(2);
-            } else {
-                document.getElementById("saldo-pantalla").innerText = "0.00";
             }
         });
-
-        function pagar() {
-            Telegram.WebApp.showAlert("Para recargar con tarjeta o USDT, contacta a soporte.");
-        }
 
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
