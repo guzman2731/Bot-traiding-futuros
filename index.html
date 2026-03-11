@@ -38,11 +38,34 @@
     </div>
 
     <script>
-        // 1. PEGA TU CONFIGURACIÓN DE FIREBASE AQUÍ ABAJO
-        const firebaseConfig =// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+        <script>
+        // PEGA TUS LLAVES AQUÍ (Las que me mostraste en la foto)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCA1EZJ87ev6Tj8X...", 
+            authDomain: "bottraiding2731.firebaseapp.com",
+            projectId: "bottraiding2731",
+            storageBucket: "bottraiding2731.appspot.com",
+            messagingSenderId: "471008578191",
+            appId: "1:471008578191:web:fa5..."
+        };
+
+        // Inicializar
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Función para leer saldo
+        db.collection("usuarios").doc("Ran2731").onSnapshot((doc) => {
+            if (doc.exists) {
+                document.getElementById("saldo-pantalla").innerText = doc.data().saldo.toFixed(2);
+            }
+        });
+
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+    </script>
+</body>
+</html>
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
