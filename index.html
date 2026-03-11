@@ -3,33 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>USDT AI Trade Robot</title>
+    <title>USDT AI Trade</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore-compat.js"></script>
     <style>
         :root { --bg-color: #0b1616; --card-bg: #142626; --accent: #26e0b8; --text-gray: #8ba3a3; }
-        body { background-color: var(--bg-color); color: white; font-family: sans-serif; margin: 0; padding: 0; }
+        body { background-color: var(--bg-color); color: white; font-family: sans-serif; margin: 0; padding: 0; overflow: hidden; }
         .header { padding: 15px; display: flex; align-items: center; gap: 10px; font-size: 14px; }
         .main-card { margin: 15px; padding: 25px; background: var(--card-bg); border-radius: 20px; text-align: center; border: 1px solid #1f3d3d; }
         .balance-val { font-size: 42px; font-weight: bold; margin: 10px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .usdt-logo { width: 32px; height: 32px; background: #26a17b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-        .btn-buy { background: var(--accent); color: #0b1616; padding: 18px; border-radius: 15px; border: none; font-weight: bold; width: 92%; margin: 10px auto; display: block; font-size: 16px; }
+        .btn-buy { background: var(--accent); color: #0b1616; padding: 18px; border-radius: 15px; border: none; font-weight: bold; width: 90%; margin: 20px auto; display: block; font-size: 16px; }
         .nav-bar { position: fixed; bottom: 0; width: 100%; background: #0b1616; display: grid; grid-template-columns: repeat(4, 1fr); padding: 15px 0; border-top: 1px solid #1f3d3d; text-align: center; font-size: 11px; }
     </style>
 </head>
 <body>
-
     <div class="header">👤 <b>Ran2731</b> <span style="margin-left: auto;">🔔 🌐</span></div>
-
     <div class="main-card">
         <div style="color:var(--accent); font-size:13px; font-weight:bold;">🔥 (USDT Trade Rights)</div>
-        <div class="balance-val"><div class="usdt-logo">₮</div> <span id="saldo-pantalla">Cargando...</span></div>
+        <div class="balance-val"><div class="usdt-logo">₮</div> <span id="saldo-pantalla">0.00</span></div>
         <div style="color: var(--text-gray); font-size: 14px;">Ganancia diaria: <span style="color:var(--accent)">$0.550 (+5.50%)</span></div>
     </div>
-
-    <button class="btn-buy">₮ Comprar USDT 🔥</button>
-
+    <button class="btn-buy" onclick="solicitarPago()">₮ Comprar USDT 🔥</button>
     <div class="nav-bar">
         <div style="color:var(--accent)">🏠<br>Hogar</div>
         <div>👥<br>Amigos</div>
@@ -38,89 +34,29 @@
     </div>
 
     <script>
-        <script>
-        // PEGA TUS LLAVES AQUÍ (Las que me mostraste en la foto)
         const firebaseConfig = {
-            apiKey: "AIzaSyCA1EZJ87ev6Tj8X...", 
+            apiKey: "AIzaSyCA1EZJ87ev6Tj8XnIpPEvDUTZjp2j_H9Y",
             authDomain: "bottraiding2731.firebaseapp.com",
             projectId: "bottraiding2731",
-            storageBucket: "bottraiding2731.appspot.com",
+            storageBucket: "bottraiding2731.firebasestorage.app",
             messagingSenderId: "471008578191",
-            appId: "1:471008578191:web:fa5..."
+            appId: "1:471008578191:web:fa537d38aac3b1647d3efa"
         };
 
-        // Inicializar
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Función para leer saldo
+        // Leer saldo en tiempo real
         db.collection("usuarios").doc("Ran2731").onSnapshot((doc) => {
             if (doc.exists) {
-                document.getElementById("saldo-pantalla").innerText = doc.data().saldo.toFixed(2);
+                document.getElementById("saldo-pantalla").innerText = parseFloat(doc.data().saldo).toFixed(2);
             }
         });
 
-        Telegram.WebApp.ready();
-        Telegram.WebApp.expand();
-    </script>
-</body>
-</html>
-
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyCA1EZJ87ev6Tj8XnIpPEvDUTZjP2j_H9Y",
-  authDomain: "bottraiding2731.firebaseapp.com",
-  projectId: "bottraiding2731",
-  storageBucket: "bottraiding2731.firebasestorage.app",
-  messagingSenderId: "471008578191",
-  appId: "1:471008578191:web:fa537d38aac3b1647d3efa"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyCA1EZJ87ev6Tj8XnIpPEvDUTZjP2j_H9Y",
-  authDomain: "bottraiding2731.firebaseapp.com",
-  projectId: "bottraiding2731",
-  storageBucket: "bottraiding2731.firebasestorage.app",
-  messagingSenderId: "471008578191",
-  appId: "1:471008578191:web:fa537d38aac3b1647d3efa"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-            apiKey: "TU_API_KEY",
-            authDomain: "TU_DOMINIO",
-            projectId: "TU_PROJECT_ID",
-            storageBucket: "TU_BUCKET",
-            messagingSenderId: "TU_SENDER_ID",
-            appId: "TU_APP_ID"
-        };
-
-        // 2. INICIALIZAR FIREBASE
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // 3. FUNCIÓN PARA LEER EL SALDO EN TIEMPO REAL
-        function obtenerSaldo() {
-            // Buscamos en la colección "usuarios" el documento "Ran2731"
-            db.collection("usuarios").doc("Ran2731")
-                .onSnapshot((doc) => {
-                    if (doc.exists) {
-                        const datos = doc.data();
-                        document.getElementById("saldo-pantalla").innerText = parseFloat(datos.saldo).toFixed(2);
-                    } else {
-                        console.log("No existe el usuario en Firebase");
-                        document.getElementById("saldo-pantalla").innerText = "0.00";
-                    }
-                });
+        function solicitarPago() {
+            Telegram.WebApp.showAlert("Sistema de tarjetas en mantenimiento. Por ahora, contacta al soporte para recargar vía USDT manual.");
         }
 
-        // Ejecutar al abrir
-        obtenerSaldo();
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
     </script>
