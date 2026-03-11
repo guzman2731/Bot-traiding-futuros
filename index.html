@@ -5,20 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CriptoBot Pro</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        body { background-color: #000; color: white; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
-        .card { background: #111; border: 1px solid #00ff00; padding: 20px; border-radius: 15px; margin-top: 20px; }
-        .price { font-size: 32px; color: #00ff00; font-weight: bold; }
-        .btn { background: #00ff00; color: black; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; margin-top: 20px; width: 100%; }
+        body { background-color: #0b0e11; color: white; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
+        .card { background: #1e2329; border: 1px solid #02c076; padding: 20px; border-radius: 15px; margin-top: 20px; }
+        .price { font-size: 32px; color: #02c076; font-weight: bold; margin: 10px 0; }
+        .btn-deposit { background: #02c076; color: black; border: none; padding: 15px; border-radius: 10px; font-weight: bold; margin-top: 20px; width: 100%; cursor: pointer; }
+        #deposit-section { display: none; background: white; color: black; margin-top: 20px; padding: 20px; border-radius: 15px; }
+        #qrcode { display: flex; justify-content: center; margin: 15px 0; }
+        .wallet-addr { word-break: break-all; font-size: 12px; font-weight: bold; background: #eee; padding: 10px; border-radius: 5px; }
     </style>
 </head>
 <body>
-    <h2>MI PANEL DE TRADING</h2>
+    <h3>PANEL DE TRADING</h3>
     <div class="card">
-        <p>Balance Estimado</p>
-        <div class="price">0.00 USDT</div>
+        <p style="color: #848e9c;">Bitcoin / USDT</p>
+        <div class="price" id="btc-price">Cargando...</div>
     </div>
-    <button class="btn" onclick="Telegram.WebApp.close()">CERRAR APP</button>
+
+    <button class="btn-deposit" onclick="showDeposit()">📥 DEPOSITAR USDT</button>
+
+    <div id="deposit-section">
+        <h4>Depositar USDT (TRC20)</h4>
+        <div id="qrcode"></div>
+        <p class="wallet-addr" id="wallet">TU_DIRECCION_AQUI</p>
+        <p style="font-size: 10px;">Solo envía USDT por la red TRC20</p>
+        <button onclick="hideDeposit()" style="margin-top:10px; border:none; background:none; color:red; font-weight:bold;">VOLVER</button>
+    </div>
+
+    <script>
+        // PEGA TU DIRECCIÓN AQUÍ
+        const miBilletera TGGCpwgxRA2J66Sm29XAbU8TC3TDYzoWH9
+
+        function showDeposit() {
+            document.getElementById('deposit-section').style.display = 'block';
+            document.getElementById('wallet').innerText = miBilletera;
+            // Generar QR
+            document.getElementById('qrcode').innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), {
+                text: miBilletera,
+                width: 150,
+                height: 150
+            });
+        }
+
+        function hideDeposit() {
+            document.getElementById('deposit-section').style.display = 'none';
+        }
+
+        async function fetchPrice() {
+            try {
+                const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+                const data = await response.json();
+                document.getElementById('btc-price').innerText = `$${parseFloat(data.price).toLocaleString()}`;
+            } catch (e) { document.getElementById('btc-price').innerText = "API Error"; }
+        }
+        setInterval(fetchPrice, 3000);
+        fetchPrice();
+        Telegram.WebApp.ready();
+    </script>
 </body>
 </html>
-
